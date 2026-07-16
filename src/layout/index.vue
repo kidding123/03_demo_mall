@@ -27,6 +27,10 @@
           <el-icon><List /></el-icon>
           <span>我的订单</span>
         </el-menu-item>
+        <el-menu-item index="/address">
+          <el-icon><Location /></el-icon>
+          <span>我的地址</span>
+        </el-menu-item>
         <el-menu-item index="/favorite">
           <el-icon><Star /></el-icon>
           <span>我的收藏</span>
@@ -117,7 +121,8 @@ import {
   Setting,
   Star,
   Ticket,
-  Timer
+  Timer,
+  Location
 } from '@element-plus/icons-vue'
 import { useCartStore } from '@/store/cart'
 import { useUserStore } from '@/store/user'

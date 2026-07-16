@@ -73,6 +73,13 @@ const router = createRouter({
           meta: { requiresAuth: true }
         },
         {
+          // 我的地址，需要登录
+          path: 'address',
+          name: 'address',
+          component: () => import('../views/user/AddressView.vue'),
+          meta: { requiresAuth: true }
+        },
+        {
           // 我的收藏，需要登录
           path: 'favorite',
           name: 'favorite',

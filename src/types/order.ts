@@ -1,14 +1,4 @@
-// 收货地址
-export interface Address {
-  id: number
-  name: string
-  phone: string
-  province: string
-  city: string
-  district: string
-  detail: string
-  isDefault: boolean
-}
+import type { Address } from './address'
 
 // 订单中的商品项
 export interface OrderItem {
@@ -31,7 +21,7 @@ export interface Order {
   discountAmount: number // 优惠券抵扣的金额
   payAmount: number // 实付金额 = totalPrice - discountAmount
   status: OrderStatus
-  address: Address
+  address: Address // 下单时的收货地址快照
   createdAt: string
 }
 
@@ -42,3 +32,6 @@ export interface CreateOrderParams {
   items: OrderItem[]
   discountAmount?: number
 }
+
+// 重新导出 Address，保持之前 `import type { Address } from '@/types/order'` 的写法也能兼容
+export type { Address }

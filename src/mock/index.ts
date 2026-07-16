@@ -1,4 +1,5 @@
 import { registerProductMock } from './product'
+import { registerAddressMock } from './address'
 import { registerOrderMock } from './order'
 import { registerUserMock } from './user'
 import { registerDashboardMock } from './dashboard'
@@ -10,6 +11,7 @@ import { registerSearchMock } from './search'
 
 export function setupMock() {
   registerProductMock()
+  registerAddressMock()
   registerOrderMock()
   registerUserMock()
   registerDashboardMock()

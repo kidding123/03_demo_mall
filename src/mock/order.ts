@@ -1,29 +1,6 @@
 import Mock from 'mockjs'
-import type { Address, Order, OrderItem } from '@/types/order'
-
-// 预置两个收货地址
-const addressList: Address[] = [
-  {
-    id: 1,
-    name: '张三',
-    phone: '138 0000 0000',
-    province: '广东省',
-    city: '深圳市',
-    district: '南山区',
-    detail: '科技园南区某栋 101',
-    isDefault: true
-  },
-  {
-    id: 2,
-    name: '李四',
-    phone: '139 0000 0000',
-    province: '北京市',
-    city: '北京市',
-    district: '朝阳区',
-    detail: '建国路某号',
-    isDefault: false
-  }
-]
+import type { Order, OrderItem } from '@/types/order'
+import { getAddressById } from './address'
 
 // 订单数据存在内存里，刷新浏览器会丢失（mock 阶段的局限）
 let orderList: Order[] = []
@@ -37,7 +14,7 @@ export function createOrderRecord(params: {
   items: OrderItem[]
   discountAmount?: number
 }): Order {
-  const address = addressList.find((a) => a.id === params.addressId)
+  const address = getAddressById(params.addressId)
   const totalPrice = params.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const discountAmount = params.discountAmount || 0
   const payAmount = Math.max(totalPrice - discountAmount, 0)
@@ -51,24 +28,14 @@ export function createOrderRecord(params: {
     discountAmount,
     payAmount,
     status: 'paid', // 简化处理：下单即视为支付成功
-    address: address as Address,
+    address: address!,
     createdAt: new Date().toLocaleString()
   }
   orderList.unshift(order)
   return order
 }
 
-// 获取默认收货地址，供秒杀这种"一键下单"场景使用
-export function getDefaultAddress() {
-  return addressList.find((a) => a.isDefault) || addressList[0]
-}
-
 export function registerOrderMock() {
-  // 地址列表
-  Mock.mock(/\/api\/address\/list/, 'get', () => {
-    return { code: 200, message: 'success', data: addressList }
-  })
-
   // 创建订单
   Mock.mock(/\/api\/order\/create/, 'post', (options: any) => {
     const body = JSON.parse(options.body)

@@ -18,6 +18,11 @@
         <span>我的订单</span>
         <el-icon class="arrow"><ArrowRight /></el-icon>
       </div>
+      <div class="menu-item" @click="router.push('/address')">
+        <el-icon><Location /></el-icon>
+        <span>我的地址</span>
+        <el-icon class="arrow"><ArrowRight /></el-icon>
+      </div>
       <div class="menu-item" @click="router.push('/favorite')">
         <el-icon><Star /></el-icon>
         <span>我的收藏</span>
@@ -42,7 +47,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { List, ShoppingCart, ArrowRight, Setting, Star } from '@element-plus/icons-vue'
+import { List, ShoppingCart, ArrowRight, Setting, Star, Location } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/user'
 
 const router = useRouter()

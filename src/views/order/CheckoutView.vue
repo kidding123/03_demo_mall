@@ -9,8 +9,16 @@
     <template v-else>
       <!-- 收货地址 -->
       <div class="section">
-        <h3>收货地址</h3>
-        <el-radio-group v-model="selectedAddressId" class="address-list">
+        <div class="section-header">
+          <h3>收货地址</h3>
+          <el-link type="primary" @click="router.push('/address')">管理地址</el-link>
+        </div>
+
+        <el-empty v-if="addressList.length === 0" description="还没有收货地址" :image-size="60">
+          <el-button type="primary" @click="router.push('/address')">去添加地址</el-button>
+        </el-empty>
+
+        <el-radio-group v-else v-model="selectedAddressId" class="address-list">
           <el-radio
             v-for="addr in addressList"
             :key="addr.id"
@@ -104,11 +112,12 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { getAddressList, createOrder } from '@/api/order'
+import { createOrder } from '@/api/order'
+import { getAddressList } from '@/api/address'
 import { getMyCoupons, useCoupon } from '@/api/coupon'
 import { useCartStore } from '@/store/cart'
 import { useUserStore } from '@/store/user'
-import type { Address } from '@/types/order'
+import type { Address } from '@/types/address'
 import type { UserCouponWithDetail } from '@/types/coupon'
 
 const router = useRouter()
@@ -148,7 +157,8 @@ const payAmount = computed(() =>
 )
 
 async function fetchAddressList() {
-  addressList.value = await getAddressList()
+  if (!userStore.userInfo) return
+  addressList.value = await getAddressList(userStore.userInfo.id)
   const defaultAddr = addressList.value.find((a) => a.isDefault)
   selectedAddressId.value = defaultAddr ? defaultAddr.id : addressList.value[0]?.id
 }
@@ -225,7 +235,18 @@ onMounted(initData)
   margin-bottom: 16px;
 }
 
-.section h3 {
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.section-header h3 {
+  margin: 0;
+}
+
+.section > h3 {
   margin: 0 0 16px 0;
   font-size: 16px;
 }

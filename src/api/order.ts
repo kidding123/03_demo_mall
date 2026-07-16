@@ -1,10 +1,5 @@
 import request from '@/utils/request'
-import type { Address, CreateOrderParams, Order, OrderStatus } from '@/types/order'
-
-// 获取收货地址列表
-export function getAddressList() {
-  return request.get<any, Address[]>('/address/list')
-}
+import type { CreateOrderParams, Order, OrderStatus } from '@/types/order'
 
 // 创建订单
 export function createOrder(params: CreateOrderParams) {
