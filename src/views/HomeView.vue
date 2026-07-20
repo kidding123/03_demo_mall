@@ -2,12 +2,12 @@
   <div class="home-page">
     <!-- 轮播图 -->
     <el-carousel height="320px" class="banner">
-      <el-carousel-item v-for="banner in banners" :key="banner.id">
-        <div class="banner-slide">
-          <img :src="banner.image" class="banner-image" />
-          <div class="banner-title">{{ banner.title }}</div>
-        </div>
-      </el-carousel-item>
+         <el-carousel-item v-for="banner in banners" :key="banner.id">
+            <div class="banner-slide" style="cursor: pointer" @click="router.push(banner.link)">
+             <img :src="banner.image" class="banner-image" />
+             <div class="banner-title">{{ banner.title }}</div>
+           </div>
+         </el-carousel-item>
     </el-carousel>
 
     <!-- 秒杀入口横幅 -->
